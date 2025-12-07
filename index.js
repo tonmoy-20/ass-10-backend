@@ -67,6 +67,19 @@ async function run() {
       const result = await petServices.find(query).toArray();
       res.send(result);
     });
+    app.put("/update/:id", async (req, res) => {
+      const id = req.params.id;
+      const data = req.body;
+
+      const query = { _id: new ObjectId(id) };
+
+      const updateService = {
+        $set: data,
+      };
+
+      const result = await petServices.updateOne(query, updateService);
+      res.send(result);
+    });
 
     app.delete("/delete/:id", async (req, res) => {
       const id = req.params.id;

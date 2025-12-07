@@ -43,6 +43,22 @@ async function run() {
       const result = await petServices.find(query).toArray();
       res.send(result);
     });
+    app.get("/services/:id", async (req, res) => {
+      const id = req.params.id;
+
+      try {
+        const query = { _id: new ObjectId(id) };
+        const result = await petServices.findOne(query);
+
+        if (!result) {
+          return res.status(404).send({ message: "Service not found" });
+        }
+
+        res.send(result);
+      } catch (error) {
+        res.status(500).send({ message: "Invalid ID format", error });
+      }
+    });
 
     app.get("/my-services", async (req, res) => {
       const { email } = req.query;

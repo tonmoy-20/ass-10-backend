@@ -94,6 +94,11 @@ async function run() {
       res.status(201).send(result);
     });
 
+    app.get("/orders", async (req, res) => {
+      const result = await orderCollections.find().toArray();
+      res.status(200).send(result);
+    });
+
     // await client.db("admin").command({ ping: 1 });
     console.log("Mongo Connected Successfully!");
   } finally {
